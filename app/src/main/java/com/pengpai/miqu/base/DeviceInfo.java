@@ -21,10 +21,6 @@ import java.util.List;
 
 public class DeviceInfo {
 
-    public interface GetRespone{
-        void onReceivedSuccess(String result);
-    }
-
     public static String getDeviceBrand() {
         return Build.BRAND;
     }
@@ -36,8 +32,6 @@ public class DeviceInfo {
     public static String getDeviceAdvertisingID(final Context context) {
 
         AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-            GetRespone AdvID;
-
             @Override
             protected String doInBackground(Void... params) {
                 AdvertisingIdClient.Info idInfo = null;
@@ -65,7 +59,6 @@ public class DeviceInfo {
             @Override
             protected void onPostExecute(String advertId) {
                 Toast.makeText(context, advertId, Toast.LENGTH_SHORT).show();
-                AdvID.onReceivedSuccess(advertId);
             }
 
         };
