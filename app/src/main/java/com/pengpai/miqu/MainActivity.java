@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
         Context context = getApplicationContext();
 
         printLog(context);
+
     }
 
     private void printLog(Context context) {
