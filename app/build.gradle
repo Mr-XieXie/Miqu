@@ -10,10 +10,25 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            storeFile file('mykeystore.jks')
+            storePassword 'miqu.com'
+            keyAlias 'key_mq'
+            keyPassword 'miqu.com'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            debug {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
@@ -26,4 +41,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation files('libs/mobile_verification_android_5.1.4.181030.jar')
 }

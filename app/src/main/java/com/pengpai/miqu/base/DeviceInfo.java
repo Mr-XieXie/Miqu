@@ -58,7 +58,7 @@ public class DeviceInfo {
 
             @Override
             protected void onPostExecute(String advertId) {
-                Toast.makeText(context, advertId, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, advertId, Toast.LENGTH_SHORT).show();
             }
 
         };
