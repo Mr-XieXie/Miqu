@@ -14,4 +14,7 @@ public class Constant {
     public static final String KEY_TOKEN = "token";
 
     public static final String privatekey = "待申请";
+
+    //Wechat
+    public static String WX_APPID = "wx96330973a9fb4a99";
 }

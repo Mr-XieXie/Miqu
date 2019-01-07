@@ -20,14 +20,22 @@ import com.pengpai.miqu.base.utils.ProgressDialogUtil;
 import com.pengpai.miqu.base.utils.SharePersist;
 import com.pengpai.miqu.validate.Request;
 import com.pengpai.miqu.validate.RequestCallback;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity{
     protected String TAG = "Verification";
+
+    private IWXAPI mIWXAPI;
 
     private AuthnHelper mAuthnHelper;
     private ProgressDialogUtil mPDialogUtil;
@@ -44,13 +52,32 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         mContext = this;
         mAuthnHelper = AuthnHelper.getInstance(this);
 
+        registToWechat();
+
         requestPermission();
-        getToken();
+        //getToken();
         printLog(mContext);
 
+    }
+
+    @OnClick(R.id.connect_wechat) void connectWechat(){
+        if(!mIWXAPI.isWXAppInstalled()){
+            Toast.makeText(this,"您还未安装微信",Toast.LENGTH_SHORT).show();
+        }
+
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        mIWXAPI.sendReq(req);
+    }
+
+    private void registToWechat() {
+        mIWXAPI =  WXAPIFactory.createWXAPI(this,Constant.WX_APPID,false);
+        mIWXAPI.registerApp(Constant.WX_APPID);
     }
 
     @Override
@@ -150,7 +177,7 @@ public class MainActivity extends AppCompatActivity{
             public void onRequestComplete(String resultCode, String resultDes, JSONObject jsonobj) {
                 Log.e(TAG,jsonobj.toString());
                 mPDialogUtil.hideDialog();
-                listener.onGetTokenComplete(jsonobj);
+                //listener.onGetTokenComplete(jsonobj);
             }
         });
     }
