@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity{
     private AuthnHelper mAuthnHelper;
     private ProgressDialogUtil mPDialogUtil;
     private TokenListener mListener;
-    private String mAccessToken=null;
+    private String mAccessToken;
     private Context mContext;
     private Timer timer;
     private String mToken;
